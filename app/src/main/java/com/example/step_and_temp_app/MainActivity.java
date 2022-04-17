@@ -12,12 +12,16 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private TextView stepCounterText;
+    private TextView ambientTempText;
+    private TextView ambientTempExplainer;
 
     private SensorManager sensorManager;
 
     private Sensor stepSensor;
     private Sensor ambientTemp;
-    private boolean isSensorPresent;
+    private boolean isSensorPresent = false;
+    private boolean isAmbientTempPresent = false;
+    private int ambientTempCelsius = 0;
 
 
 
@@ -26,18 +30,36 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ambientTempText = findViewById(R.id.ambientTempUI);
+        ambientTempExplainer = findViewById(R.id.ambTempExplainer)
+
         sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
         ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
         {
             stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-            isSensorPresent
+            isSensorPresent = true;
+            System.out.println("STEP COUNTER DETECTED SENSOR LETS GO");
         }
         else
         {
-
+            //stepCounterText.setText("No step counter detected");
+            System.out.println("No step counter detected");
+            isSensorPresent = false;
         }
+
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) !=null) {
+            ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+            isAmbientTempPresent = true;
+        }
+        else {
+            ambientTempText.setText("No ambient temperature sensor detected");
+            System.out.println("No ambient temperature sensor detected");
+            isAmbientTempPresent = false;
+        }
+
+        System.out.println(isAmbientTempPresent);
     }
 
     protected void onResume() {        //Since this method has the protected access modifier, it can only be accessed within its own package,
@@ -54,10 +76,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override   //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
     public void onSensorChanged(SensorEvent sensorEvent) {
 
+        if (sensorEvent.sensor == ambientTemp) {
+            ambientTempCelsius = (int) sensorEvent.values[0];
+            ambientTempText.setText(String.valueOf(ambientTempCelsius));
+        }
+
+        if (ambientTempCelsius < 18) {
+            ambientTempExplainer.setText("It's a bit chilly in here!");
+        }
+
+        if (ambientTempCelsius > 22) {
+            ambientTempExplainer.setText("It's a bit hot in here!");
+        }
     }
 
     @Override   //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
+
+
+
+
 }
