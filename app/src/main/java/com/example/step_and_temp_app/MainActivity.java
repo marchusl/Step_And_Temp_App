@@ -20,5 +20,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
+        {
+            stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+            isSensorPresent
+        }
+        else
+        {
+
+        }
     }
 }
