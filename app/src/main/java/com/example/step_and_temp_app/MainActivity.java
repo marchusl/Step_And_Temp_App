@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -52,7 +53,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onResume();
         if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
         {
-            
+            sensorManager.registerListener(this,stepSensor,SensorManager.SENSOR_DELAY_NORMAL);
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
+        {
+            sensorManager.unregisterListener(this, stepSensor);
         }
     }
 }
