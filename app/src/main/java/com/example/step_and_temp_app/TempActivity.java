@@ -9,7 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class TempActivity extends AppCompatActivity {
 
     private TextView ambientTempText;
     private TextView ambientTempExplainer;
@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private int ambientTempCelsius = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,15 +31,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ambientTempText = findViewById(R.id.ambientTempUI);
         ambientTempExplainer = findViewById(R.id.ambTempExplainer);
 
-        sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
 
-        if(sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) !=null) {
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null) {
             ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
             isAmbientTempPresent = true;
-        }
-        else {
+        } else {
             ambientTempText.setText("No ambient temperature sensor detected");
             System.out.println("No ambient temperature sensor detected");
             isAmbientTempPresent = false;
@@ -50,17 +48,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     protected void onResume() {        //Since this method has the protected access modifier, it can only be accessed within its own package,
-                                       //and by a subclass of its class in another package
+        //and by a subclass of its class in another package
         super.onResume();
-        sensorManager.registerListener(this, ambientTemp, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener((SensorEventListener) this, ambientTemp, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener((SensorEventListener) this);
     }
 
-    @Override   //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
+    //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
     public void onSensorChanged(SensorEvent sensorEvent) {
 
         if (sensorEvent.sensor == ambientTemp) {
@@ -76,12 +74,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
-    @Override   //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
+    //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-
-
-
-
 }
