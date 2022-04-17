@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     package="com.example.step_and_temp_app">
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+=======
+    package="com.example.step_and_temp_app" >
+>>>>>>> Mathias
 
     <application
         android:allowBackup="true"
@@ -9,10 +13,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Step_And_Temp_App">
+        android:theme="@style/Theme.Step_And_Temp_App" >
+        <activity
+            android:name=".TempActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
