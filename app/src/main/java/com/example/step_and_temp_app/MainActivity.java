@@ -47,5 +47,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
+        {
+            
+        }
+    }
 }
