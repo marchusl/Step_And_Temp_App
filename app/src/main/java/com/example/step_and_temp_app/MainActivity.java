@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor stepSensor;
     private boolean isSensorPresent;
+    int stepCounter = 0;
 
 
     @Override
@@ -40,7 +41,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-
+        if(sensorEvent.sensor == stepSensor)
+        {
+            stepCounter = (int) sensorEvent.values[0];
+            stepCounterText.setText(String.valueOf(stepCounter));
+        }
     }
 
     @Override
