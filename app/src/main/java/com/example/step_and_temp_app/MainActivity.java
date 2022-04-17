@@ -9,19 +9,14 @@ import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-<<<<<<< HEAD
+
 import android.hardware.SensorListener;
-=======
->>>>>>> Mathias
+
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
-<<<<<<< HEAD
-public class MainActivity{
-    
-=======
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private TextView ambientTempText;
@@ -93,9 +88,4 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
-
-
-
-
->>>>>>> Mathias
 }
