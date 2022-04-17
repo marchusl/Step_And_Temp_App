@@ -19,9 +19,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private Sensor stepSensor;
     private Sensor ambientTemp;
-    private boolean isSensorPresent = false;
+
+    private boolean isStepSensorPresent = false;
     private boolean isAmbientTempPresent = false;
+
     private int ambientTempCelsius = 0;
+    private int StepCounter = 0;
 
 
 
@@ -30,8 +33,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        stepCounterText = findViewById(R.id.stepCounterUI);
+
         ambientTempText = findViewById(R.id.ambientTempUI);
-        ambientTempExplainer = findViewById(R.id.ambTempExplainer)
+        ambientTempExplainer = findViewById(R.id.ambTempExplainer);
 
         sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
         ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
@@ -39,14 +44,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
         {
             stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-            isSensorPresent = true;
+            isStepSensorPresent = true;
             System.out.println("STEP COUNTER DETECTED SENSOR LETS GO");
         }
         else
         {
             //stepCounterText.setText("No step counter detected");
             System.out.println("No step counter detected");
-            isSensorPresent = false;
+            isStepSensorPresent = false;
         }
 
         if(sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) !=null) {
@@ -77,8 +82,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onSensorChanged(SensorEvent sensorEvent) {
 
         if (sensorEvent.sensor == ambientTemp) {
-            ambientTempCelsius = (int) sensorEvent.values[0];
+            StepCounter = (int) sensorEvent.values[0];
             ambientTempText.setText(String.valueOf(ambientTempCelsius));
+        }
+
+        if (sensorEvent.sensor == stepSensor) {
+            StepCounter = (int) sensorEvent.values[0];
+            stepCounterText.setText(String.valueOf(StepCounter));
         }
 
         if (ambientTempCelsius < 18) {
