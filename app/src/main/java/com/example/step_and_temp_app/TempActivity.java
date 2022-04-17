@@ -1,81 +1,81 @@
 package com.example.step_and_temp_app;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class TempActivity extends AppCompatActivity {
-
-    private TextView ambientTempText;
-    private TextView ambientTempExplainer;
-
+public class TempActivity extends AppCompatActivity{
+    private TextView stepCounterText;
     private SensorManager sensorManager;
-
-    private Sensor ambientTemp;
-
-    private boolean isAmbientTempPresent = false;
-
-    private int ambientTempCelsius = 0;
+    private Sensor stepSensor;
+    private boolean isSensorPresent;
+    int stepCounter = 0;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ambientTempText = findViewById(R.id.ambientTempUI);
-        ambientTempExplainer = findViewById(R.id.ambTempExplainer);
+        stepCounterText = findViewById(R.id.stepText);
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
 
-
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) != null) {
-            ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
-            isAmbientTempPresent = true;
-        } else {
-            ambientTempText.setText("No ambient temperature sensor detected");
-            System.out.println("No ambient temperature sensor detected");
-            isAmbientTempPresent = false;
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
+        {
+            stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+            isSensorPresent = true;
         }
-
-        System.out.println(isAmbientTempPresent);
+        else
+        {
+            stepCounterText.setText("No step counter detected");
+            isSensorPresent = false;
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED) { //ask for permission
+            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+        }
     }
 
-    protected void onResume() {        //Since this method has the protected access modifier, it can only be accessed within its own package,
-        //and by a subclass of its class in another package
-        super.onResume();
-        sensorManager.registerListener((SensorEventListener) this, ambientTemp, SensorManager.SENSOR_DELAY_NORMAL);
-    }
 
-    protected void onPause() {
-        super.onPause();
-        sensorManager.unregisterListener((SensorEventListener) this);
-    }
-
-    //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
     public void onSensorChanged(SensorEvent sensorEvent) {
-
-        if (sensorEvent.sensor == ambientTemp) {
-            ambientTempText.setText(String.valueOf(ambientTempCelsius));
-        }
-
-        if (ambientTempCelsius < 18) {
-            ambientTempExplainer.setText("It's a bit chilly in here!");
-        }
-
-        if (ambientTempCelsius > 22) {
-            ambientTempExplainer.setText("It's a bit hot in here!");
+        if(sensorEvent.sensor == stepSensor)
+        {
+            stepCounter = (int) sensorEvent.values[0];
+            stepCounterText.setText(String.valueOf(stepCounter));
         }
     }
 
-    //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
+
     public void onAccuracyChanged(Sensor sensor, int i) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
+        {
+            sensorManager.registerListener((SensorEventListener) this,stepSensor,SensorManager.SENSOR_DELAY_NORMAL);
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)!=null)
+        {
+            sensorManager.unregisterListener((SensorEventListener) this, stepSensor);
+        }
     }
 }
