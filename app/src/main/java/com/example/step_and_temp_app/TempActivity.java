@@ -14,7 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class TempActivity extends AppCompatActivity{
+public class TempActivity extends AppCompatActivity implements SensorEventListener{
     private TextView stepCounterText;
     private SensorManager sensorManager;
     private Sensor stepSensor;
@@ -26,9 +26,10 @@ public class TempActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_stepcounter);
 
-        stepCounterText = findViewById(R.id.stepText);
+        stepCounterText = findViewById(R.id.stepCounterUI);
+
 
         sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
 
@@ -48,7 +49,7 @@ public class TempActivity extends AppCompatActivity{
         }
     }
 
-
+    @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(sensorEvent.sensor == stepSensor)
         {
@@ -57,7 +58,7 @@ public class TempActivity extends AppCompatActivity{
         }
     }
 
-
+    @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
 
     }

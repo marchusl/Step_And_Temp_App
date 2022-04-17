@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,12 +16,16 @@ import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private TextView ambientTempText;
     private TextView ambientTempExplainer;
+
+    private Button goToStepCounterPage;
 
     private SensorManager sensorManager;
 
@@ -40,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ambientTempText = findViewById(R.id.ambientTempUI);
         ambientTempExplainer = findViewById(R.id.ambTempExplainer);
 
+        goToStepCounterPage = findViewById(R.id.buttonlol);
+
         sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
         ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
@@ -55,7 +62,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         System.out.println(isAmbientTempPresent);
+
+        goToStepCounterPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TempActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     protected void onResume() {        //Since this method has the protected access modifier, it can only be accessed within its own package,
                                        //and by a subclass of its class in another package
@@ -83,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             ambientTempExplainer.setText("It's a bit hot in here!");
         }
     }
+
 
     @Override   //IS NOT USED but methods need to be implemented since SensorEventListener is implemented by MainActivity
     public void onAccuracyChanged(Sensor sensor, int i) {
