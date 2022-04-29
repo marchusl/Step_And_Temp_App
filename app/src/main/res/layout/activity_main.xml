@@ -7,14 +7,15 @@
     tools:context=".MainActivity">
 
 =======
+
     <TextView
         android:id="@+id/ambientTempUI"
         android:layout_width="204dp"
         android:layout_height="133dp"
         android:layout_marginStart="103dp"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="104dp"
-        android:layout_marginBottom="113dp"
+        android:layout_marginEnd="103dp"
+        android:layout_marginBottom="115dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="34sp"
@@ -28,9 +29,9 @@
         android:id="@+id/ambTempExplainer"
         android:layout_width="187dp"
         android:layout_height="101dp"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="132dp"
-        android:layout_marginEnd="112dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="110dp"
         android:layout_marginBottom="25dp"
         android:text="TextView"
         android:textAlignment="center"
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="114dp"
         android:layout_marginEnd="114dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="25dp"
         android:text="Stepcounter"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/stepCounterUI"
@@ -58,9 +59,9 @@
         android:id="@+id/stepCounterUI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="157dp"
-        android:layout_marginEnd="157dp"
-        android:layout_marginBottom="126dp"
+        android:layout_marginStart="155dp"
+        android:layout_marginEnd="155dp"
+        android:layout_marginBottom="125dp"
         android:text="TextView"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,14 +69,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/buttonlol"
+        android:id="@+id/goToOtherApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="go to step counter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepCounterUI" />
+        app:layout_constraintTop_toBottomOf="@+id/stepCounterUI" /><![CDATA[
 
-    >>>>>>> Mathias
+]]>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private int ambientTempCelsius = 0;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ambientTempText = findViewById(R.id.ambientTempUI);
         ambientTempExplainer = findViewById(R.id.ambTempExplainer);
 
-        goToStepCounterPage = findViewById(R.id.buttonlol);
+        goToStepCounterPage = findViewById(R.id.goToOtherApp);
 
         sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
         ambientTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);

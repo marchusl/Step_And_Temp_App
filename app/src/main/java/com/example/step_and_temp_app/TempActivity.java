@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -12,6 +13,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class TempActivity extends AppCompatActivity implements SensorEventListener{
@@ -20,7 +23,7 @@ public class TempActivity extends AppCompatActivity implements SensorEventListen
     private Sensor stepSensor;
     private boolean isSensorPresent;
     int stepCounter = 0;
-
+    private Button goToTemp;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -29,6 +32,15 @@ public class TempActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_stepcounter);
 
         stepCounterText = findViewById(R.id.stepCounterUI);
+
+        goToTemp = findViewById(R.id.firstappbutton);
+        goToTemp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TempActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         sensorManager =  (SensorManager) getSystemService(SENSOR_SERVICE);
